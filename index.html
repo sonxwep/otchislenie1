@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор1</title>
+    <style>
+        #calculator {
+            width: 500px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            text-align: right;
+        }
+
+        button {
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+            margin: 5px;
+        }
+        a{
+display: flex;
+justify-content: center;align-items: center;
+color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="calculator">
+        <input type="text" id="display" disabled>
+        <br>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <br>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <br>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="calculate()">=</button>
+        <br>
+        <button onclick="setOperation('+')">+</button>
+        <button onclick="setOperation('-')">-</button>
+        <button onclick="setOperation('*')">*</button>
+        <button onclick="setOperation('/')">/</button>
+        <br>
+        <button onclick="setOperation('sqrt')">√</button>
+        <button onclick="setOperation('square')">x²</button>
+
+
+
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let operation = '';
+        let firstValue = '';
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function setOperation(op) {
+            if (display.value === '') return;
+            firstValue = parseFloat(display.value);
+            operation = op;
+            display.value = '';
+        }
+
+        function calculate() {
+            if (display.value === '') return;
+
+            let secondValue = parseFloat(display.value);
+            let result;
+
+            switch (operation) {
+                case '+':
+                    result = firstValue + secondValue;
+                    break;
+                case '-':
+                    result = firstValue - secondValue;
+                    break;
+                case '*':
+                    result = firstValue * secondValue;
+                    break;
+                case '/':
+                    if (secondValue === 0) {
+                        display.value = 'На 0 делить нельзя';
+                        return;
+                    }
+                    result = firstValue / secondValue;
+                    break;
+                case 'sqrt':
+                    result = Math.sqrt(firstValue);
+                    break;
+                case 'square':
+                    result = Math.pow(firstValue, 2);
+                    break;
+                default:
+                    return;
+            }
+
+            if (result.toString().includes('e')) {
+                display.value = 'Число очень большое';
+                return;
+            }
+            else {
+                display.value = result.toFixed(7);
+            }
+
+            operation = ''; // сброс операции после вычисления
+            firstValue = ''; // сброс первого значения
+
+
+        }
+
+        function clearDisplay() {
+            display.value = '';
+            operation = '';
+            firstValue = '';
+        }
+
+    </script>
+<a href="auto.html">тесты лол</a>
+</body>
+
+</html>
